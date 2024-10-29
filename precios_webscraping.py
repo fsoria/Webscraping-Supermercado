@@ -4,6 +4,9 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup as bs
 import time
+import boto3
+from io import StringIO
+from datetime import datetime
 
 def scrape_webpage(url):
     chrome_options = Options()
@@ -56,20 +59,36 @@ productos_combinados = []
 # Palabras a omitir
 palabras_a_omitir = ['crema', 'postre', 'condensada']
 
+# Fecha de scraping
+fecha_scraping = datetime.now().strftime('%Y-%m-%d')
+
 # Combina los nombres y precios en un solo listado, omitiendo productos con palabras no deseadas
 for nombre, precio in zip(productos, productos_precio):
-    # Verifica si alguna de las palabras a omitir está en el nombre
     if not any(palabra in nombre.lower() for palabra in palabras_a_omitir):
-        productos_combinados.append({'Nombre': nombre, 'Precio': precio})
+        productos_combinados.append({'Nombre': nombre, 'Precio': precio, 'Fecha_Scraping': fecha_scraping})
 
-# Imprimir la lista combinada para verificar
-print("\nLista combinada de productos y precios (sin palabras omitidas):")
-for producto in productos_combinados:
-    print(producto)
-
-# Convierte la lista combinada en un DataFrame
+# Convertimos la lista combinada en un DataFrame
 df_combinado = pd.DataFrame(productos_combinados)
 
-# Muestra el DataFrame combinado
-print("\nDataFrame combinado de productos y precios:")
-print(df_combinado)
+# Configuración de S3
+s3 = boto3.client('s3')
+bucket_name = 'webscraping-supermercado'
+# Nombre del archivo único en S3
+file_key = 'datafile_unico.csv'
+
+# Intentamos descargar el archivo existente y combinarlo con los nuevos datos
+try:
+    response = s3.get_object(Bucket=bucket_name, Key=file_key)
+    existing_data = pd.read_csv(response['Body'])
+    # Concatenar el DataFrame existente con el nuevo
+    df_combinado = pd.concat([existing_data, df_combinado], ignore_index=True)
+except s3.exceptions.NoSuchKey:
+    print("El archivo no existe en S3; se creará un nuevo archivo.")
+
+# Convertimos el DataFrame actualizado a CSV en memoria
+csv_buffer = StringIO()
+df_combinado.to_csv(csv_buffer, index=False)
+
+# Subir el archivo actualizado a S3
+s3.put_object(Bucket=bucket_name, Key=file_key, Body=csv_buffer.getvalue())
+print("Datos agregados al archivo CSV único en S3.")
