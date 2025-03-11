@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precios Supermercado</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+
+    <!-- Formulario de búsqueda y filtrado -->
+    <form method="GET" action="/">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" value="{{ nombre }}">
+
+        <label for="fecha_desde">Desde Fecha:</label>
+        <input type="date" id="fecha_desde" name="fecha_desde" value="{{ fecha_desde }}">
+
+        <label for="supermercado">Supermercado:</label>
+        <input type="text" id="supermercado" name="supermercado" value="{{ supermercado }}">
+
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Botones de ordenación -->
+    <a href="/?orden=asc&nombre={{ nombre }}&fecha_desde={{ fecha_desde }}&supermercado={{ supermercado }}">Ordenar por precio ↑</a>
+    <a href="/?orden=desc&nombre={{ nombre }}&fecha_desde={{ fecha_desde }}&supermercado={{ supermercado }}">Ordenar por precio ↓</a>
+
+    {% if precios %}
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Fecha Scraping</th>
+                <th>Supermercado</th>
+            </tr>
+            {% for producto in precios %}
+            <tr>
+                <td>{{ producto[0] }}</td>
+                <td>{{ producto[1] }}</td>
+                <td>${{ "%.3f"|format(producto[2]) }}</td>
+                <td>{{ producto[3] }}</td>
+                <td>{{ producto[4] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No hay productos disponibles.</p>
+    {% endif %}
+</body>
+</html>
