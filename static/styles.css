@@ -1,0 +1,111 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h1 {
+    background-color: #004aad;
+    color: white;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Estilos del formulario */
+form {
+    background-color: white;
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+input {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 45%;
+}
+
+button {
+    background-color: #004aad;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #003a89;
+}
+
+/* Botones de ordenación */
+.orden-links {
+    margin: 20px 0;
+}
+
+.orden-links a {
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #ffa500;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.orden-links a:hover {
+    background-color: #cc8400;
+}
+
+/* Estilos de la tabla */
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #004aad;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+/* Mensaje cuando no hay productos */
+p {
+    font-size: 18px;
+    color: #666;
+}

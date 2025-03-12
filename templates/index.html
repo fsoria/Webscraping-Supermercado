@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Precios Supermercado</title>
+    <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
     <h1>Lista de Productos</h1>
@@ -23,11 +24,13 @@
     </form>
 
     <!-- Botones de ordenación -->
-    <a href="/?orden=asc&nombre={{ nombre }}&fecha_desde={{ fecha_desde }}&supermercado={{ supermercado }}">Ordenar por precio ↑</a>
-    <a href="/?orden=desc&nombre={{ nombre }}&fecha_desde={{ fecha_desde }}&supermercado={{ supermercado }}">Ordenar por precio ↓</a>
+    <div class="orden-links">
+        <a href="/?orden=asc&nombre={{ nombre }}&fecha_desde={{ fecha_desde }}&supermercado={{ supermercado }}">Ordenar por precio ↑</a>
+        <a href="/?orden=desc&nombre={{ nombre }}&fecha_desde={{ fecha_desde }}&supermercado={{ supermercado }}">Ordenar por precio ↓</a>
+    </div>
 
     {% if precios %}
-        <table border="1">
+        <table>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
